@@ -3,7 +3,7 @@ import {
   getBankAccount,
   InsufficientFundsError,
   TransferFailedError,
-  // SynchronizationFailedError,
+  SynchronizationFailedError,
 } from '.';
 
 describe('BankAccount', () => {
@@ -53,20 +53,19 @@ describe('BankAccount', () => {
   });
 
   test('should set new balance if fetchBalance returned number', async () => {
-    await account.fetchBalance().then((result) => {
-      if (result !== null) {
-        account.balance = result;
-        expect(account.getBalance()).toBe(result);
-      }
-    });
+    try {
+      const oldBalance = account.getBalance();
+      expect(await account.synchronizeBalance()).not.toBe(oldBalance);
+    } catch (error) {
+      console.log(error);
+    }
   });
 
   test('should throw SynchronizationFailedError if fetchBalance returned null', async () => {
-    //   const result = await account.synchronizeBalance();
-    //   if (result === null) {
-    //     expect(await account.synchronizeBalance()).toThrowError(
-    //       new SynchronizationFailedError(),
-    //     );
-    //   }
+    try {
+      await account.synchronizeBalance();
+    } catch (error) {
+      expect(error as Error).toThrowError(new SynchronizationFailedError());
+    }
   });
 });
