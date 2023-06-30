@@ -9,14 +9,6 @@ describe('throttledGetDataFromApi', () => {
   afterAll(() => {
     jest.useRealTimers();
   });
-  beforeEach(() => {
-    jest.restoreAllMocks();
-    jest.clearAllMocks();
-  });
-  afterEach(() => {
-    jest.restoreAllMocks();
-    jest.clearAllMocks();
-  });
   test('should create instance with provided base url', async () => {
     const baseApiUrl = 'https://jsonplaceholder.typicode.com';
     const relativePath = '/posts';
