@@ -6,6 +6,9 @@ describe('throttledGetDataFromApi', () => {
   beforeAll(() => {
     jest.useFakeTimers();
   });
+  afterAll(() => {
+    jest.useRealTimers();
+  });
   beforeEach(() => {
     jest.restoreAllMocks();
     jest.clearAllMocks();
